@@ -1,0 +1,15 @@
+{
+  "description": "WunderGraph Cosmo Federation Demos",
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail \"ts-node demos/typescript/employees/server.ts\" \"ts-node demos/typescript/family/server.ts\" \"ts-node demos/typescript/hobbies/server.ts\" \"ts-node demos/typescript/products/server.ts\""
+  },
+  "devDependencies": {
+    "@graphql-yoga/node": "^2.13.13",
+    "@types/node": "^20.9.3",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "ts-node": "^10.9.1"
+  }
+}
