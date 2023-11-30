@@ -4,7 +4,7 @@ export const employees: Employee[] = [
   {
     __typename: 'Employee',
     id: 1,
-    products: [ProductName.CONSULTANCY, ProductName.COSMO, ProductName.ENGINE, ProductName.SDK],
+    products: [ProductName.CONSULTANCY, ProductName.COSMO, ProductName.ENGINE, ProductName.MARKETING, ProductName.SDK],
     notes: 'Jens notes reoslved by products',
   },
   {
