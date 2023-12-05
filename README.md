@@ -19,9 +19,10 @@ WunderGraph Cosmo Federation demonstrations in TypeScript or Go.
 ## TypeScript Prerequisites
 1. Node 18+
 2. Install the packages
-- pnpm: `pnpm i`
-- npm: `npm i`
-- yarn: `yarn i`
+```bash
+{package manager} install
+```
+
 
 ## Creating configuration
 NOTE: If you have not changed the graph schemas, this step is not necessary.
