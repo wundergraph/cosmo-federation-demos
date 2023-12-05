@@ -1,7 +1,8 @@
 {
-  "description": "WunderGraph Cosmo Federation Demos",
+  "description": "WunderGraph Cosmo Federation Demos in TypeScript or Go",
   "scripts": {
-    "start": "concurrently --kill-others-on-fail \"ts-node demos/typescript/employees/server.ts\" \"ts-node demos/typescript/family/server.ts\" \"ts-node demos/typescript/hobbies/server.ts\" \"ts-node demos/typescript/products/server.ts\""
+    "services": "concurrently --kill-others-on-fail \"ts-node demos/typescript/employees/server.ts\" \"ts-node demos/typescript/family/server.ts\" \"ts-node demos/typescript/hobbies/server.ts\" \"ts-node demos/typescript/products/server.ts\"",
+    "start": "concurrently \"npm services\" \"wgc router download-binary; cd ./router && ./router\""
   },
   "devDependencies": {
     "@graphql-yoga/node": "^2.13.13",

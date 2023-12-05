@@ -3,16 +3,16 @@ subgraphs:
   - name: employees
     routing_url: http://localhost:4001/graphql
     schema:
-      file: ../demos/typescript/employees/employees.graphql
+      file: ../../demos/go/pkg/subgraphs/employees/employees.graphql
   - name: family
     routing_url: http://localhost:4002/graphql
     schema:
-      file: ../demos/typescript/family/family.graphql
+      file: ../../demos/go/pkg/subgraphs/family/family.graphql
   - name: hobbies
     routing_url: http://localhost:4003/graphql
     schema:
-      file: ../demos/typescript/hobbies/hobbies.graphql
+      file: ../../demos/go/pkg/subgraphs/hobbies/hobbies.graphql
   - name: products
     routing_url: http://localhost:4004/graphql
     schema:
-      file: ../demos/typescript/products/products.graphql
+      file: ../../demos/go/pkg/subgraphs/products/products.graphql
