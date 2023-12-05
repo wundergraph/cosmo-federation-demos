@@ -37,7 +37,7 @@ WunderGraph Cosmo Federation demonstrations in TypeScript or Go.
 ```bash
   # run the router
   wgc router download-binary
-  cd /router && ./router
+  cd router && ./router
 ```
 
 Go to http://localhost:3002 and try out the example query `./example-queries.graphql`!
@@ -60,7 +60,7 @@ NOTE: If you have not changed the schemas, this step is not necessary.
 ```
 
 ### Running the demo
-1. Using Makefile
+1. Using Make
 
 ```makefile
     make run-ts
