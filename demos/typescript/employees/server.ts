@@ -134,6 +134,17 @@ const resolvers = {
       };
     },
   },
+  Subscription: {
+    currentTime: {
+      subscribe: async function* () {
+        for (;;) {
+          const now = new Date();
+          yield { currentTime: {unixTime: Math.round(now.getTime() / 1000), timeStamp: now.toISOString() }};
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+      }
+    }
+  }
 };
 
 export function createSchemaExtensionsTestServer(port = 4000) {
