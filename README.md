@@ -1,83 +1,32 @@
 # cosmo-federation-demos
-WunderGraph Cosmo Federation demonstrations in TypeScript or Go.
+
+This repository contains a demo of a [Cosmos](https://cosmo-docs.wundergraph.com/) Federation capabilities.
+It uses the command-line [`wgc`](https://cosmo-docs.wundergraph.com/cli/intro) to compose a federated schema from multiple subgraphs and run it with the `Cosmo Router`. The router is the component that understands the GraphQL Federation protocol. It is responsible for routing requests to the correct service and for aggregating the responses.
+
+## Getting started
+
+We made it easy to get started with the demo. Just follow the steps below.
 
 ## Prerequisites
-1. Install `wgc` (0.34+)
-
- ```bash
-npm i -g wgc@latest
-```
-
-## Go
-### Additional Prerequisites
-1. Install Go 1.21 https://go.dev/doc/install
-2. Install Make (optional)
-- Windows: https://gnuwin32.sourceforge.net/packages/make.htm
-- MacOS: 
-
-```bash
-brew install make
-```
+1. Install `wgc` (0.34+) globally `npm i -g wgc@latest`
+2. Install the dependencies `npm install`
 
 ### Running the demo
-1. Using makefile
-
-```makefile
-make run-go
-```
-
-2. From source
-
-- Run the services
-```bash
-# run the services
-cd demos/go && go run cmd/all/main.go
-```
-- Download and run the router
-```bash
-# run the router
-wgc router download-binary
-cd router && ./router
-```
-
-Go to http://localhost:3002 and try out the example query `./example-queries.graphql`!
-
-### Generating the router configuration
-NOTE: If you have not changed the schemas, this step is not necessary.
 
 ```bash
-cd router/go
-wgc router compose -i graphs-go.yaml -o ../config.json
+npm start
 ```
 
-## TypeScript
-### Additional Prerequisites
-1. Node 18+ https://nodejs.org/en/download
-2. Install the packages
+> [!NOTE]
+> You can also run subgraphs in Go. To do so, run `npm run start:go` instead.
+
+Finally, go to [http://localhost:3002](http://localhost:3002) and try out the example query [./example-queries.graphql](``./example-queries.graphql``)!
+
+### Generating the router configuration (optional)
+
+> [!NOTE]
+> If you have not changed the schemas, this step is not necessary.
 
 ```bash
-{package manager} install
-```
-
-### Running the demo
-1. Using Make
-
-```makefile
-make run-ts
-```
-
-2. Using your chosen package manager
-
-```bash
-{package manager} start
-```
-
-Go to http://localhost:3002 and try out the example query `./example-queries.graphql`!
-
-### Generating the router configuration
-NOTE: If you have not changed the schemas, this step is not necessary.
-
-```bash
-cd router/ts
-wgc router compose -i graphs-ts.yaml -o ../config.json
+npm run compose
 ```
