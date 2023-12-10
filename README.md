@@ -17,10 +17,10 @@ We made it easy to get started with the demo. Just follow the steps below.
 npm start
 ```
 
+Finally, go to [http://localhost:3002](http://localhost:3002) and try out the example query [./example-queries.graphql](``./example-queries.graphql``)!
+
 > [!NOTE]
 > You can also run subgraphs in Go. To do so, run `npm run start:go` instead.
-
-Finally, go to [http://localhost:3002](http://localhost:3002) and try out the example query [./example-queries.graphql](``./example-queries.graphql``)!
 
 ### Generating the router configuration (optional)
 
