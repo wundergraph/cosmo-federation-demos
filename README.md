@@ -5,7 +5,7 @@ WunderGraph Cosmo Federation demonstrations in TypeScript or Go.
 1. Install `wgc` (0.34+)
 
  ```bash
-  npm i -g wgc@latest
+npm i -g wgc@latest
 ```
 
 ## Go
@@ -16,28 +16,28 @@ WunderGraph Cosmo Federation demonstrations in TypeScript or Go.
 - MacOS: 
 
 ```bash
-    brew install make
+brew install make
 ```
 
 ### Running the demo
 1. Using makefile
 
 ```makefile
-    make run-go
+make run-go
 ```
 
 2. From source
 
 - Run the services
 ```bash
-  # run the services
-  cd demos/go && go run cmd/all/main.go
+# run the services
+cd demos/go && go run cmd/all/main.go
 ```
 - Download and run the router
 ```bash
-  # run the router
-  wgc router download-binary
-  cd router && ./router
+# run the router
+wgc router download-binary
+cd router && ./router
 ```
 
 Go to http://localhost:3002 and try out the example query `./example-queries.graphql`!
@@ -46,8 +46,8 @@ Go to http://localhost:3002 and try out the example query `./example-queries.gra
 NOTE: If you have not changed the schemas, this step is not necessary.
 
 ```bash
-   cd router/go
-   wgc router compose -i graphs-go.yaml -o ../config.json
+cd router/go
+wgc router compose -i graphs-go.yaml -o ../config.json
 ```
 
 ## TypeScript
@@ -63,13 +63,13 @@ NOTE: If you have not changed the schemas, this step is not necessary.
 1. Using Make
 
 ```makefile
-    make run-ts
+make run-ts
 ```
 
 2. Using your chosen package manager
 
 ```bash
-   {package manager} start
+{package manager} start
 ```
 
 Go to http://localhost:3002 and try out the example query `./example-queries.graphql`!
@@ -78,6 +78,6 @@ Go to http://localhost:3002 and try out the example query `./example-queries.gra
 NOTE: If you have not changed the schemas, this step is not necessary.
 
 ```bash
-   cd router/ts
-   wgc router compose -i graphs-ts.yaml -o ../config.json
+cd router/ts
+wgc router compose -i graphs-ts.yaml -o ../config.json
 ```
