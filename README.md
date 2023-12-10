@@ -1,6 +1,6 @@
 # cosmo-federation-demos
 
-This repository contains a demo of a [Cosmos](https://cosmo-docs.wundergraph.com/) Federation capabilities.
+This repository contains a demo of [WunderGraph Cosmo](https://cosmo-docs.wundergraph.com/) Federation capabilities.
 It uses the command-line [`wgc`](https://cosmo-docs.wundergraph.com/cli/intro) to compose a federated schema from multiple subgraphs and run it with the `Cosmo Router`. The router is the component that understands the GraphQL Federation protocol. It is responsible for routing requests to the correct service and for aggregating the responses.
 
 ## Getting started
