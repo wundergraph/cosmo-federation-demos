@@ -28,3 +28,5 @@ You can update the subgraph schemas and regenerate the router configuration by r
 ```bash
 npm run compose
 ```
+
+This will require a restart of the router so press `CTRL+C` and run `npm start` again.
