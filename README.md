@@ -8,8 +8,7 @@ It uses the command-line [`wgc`](https://cosmo-docs.wundergraph.com/cli/intro) t
 We made it easy to get started with the demo. Just follow the steps below.
 
 ## Prerequisites
-1. Install `wgc` (0.34+) globally `npm i -g wgc@latest`
-2. Install the dependencies `npm install`
+1. Install the dependencies `npm install`
 
 ### Running the demo
 
