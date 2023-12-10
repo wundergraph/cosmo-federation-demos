@@ -23,8 +23,7 @@ Finally, go to [http://localhost:3002](http://localhost:3002) and try out the ex
 
 ### Generating the router configuration (optional)
 
-> [!NOTE]
-> If you have not changed the schemas, this step is not necessary.
+You can update the subgraph schemas and regenerate the router configuration by running:
 
 ```bash
 npm run compose
