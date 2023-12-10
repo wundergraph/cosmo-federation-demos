@@ -19,7 +19,7 @@ npm start
 Finally, go to [http://localhost:3002](http://localhost:3002) and try out the example query [./example-queries.graphql`](./example-queries.graphql)!
 
 > [!NOTE]
-> You can also run subgraphs in Go. To do so, you need to have the Go toolchain installed and run `npm run start-go` instead of `npm start`.
+> You can also run subgraphs in Go. To do so, you need to have the [Go toolchain installed](https://go.dev/doc/install) and run `npm run start-go` instead of `npm start`.
 
 ### Generating the router configuration (optional)
 
