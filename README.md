@@ -38,4 +38,4 @@ npm run compose-go
 
 This will require a restart of the router so press `CTRL+C` and run `npm start` again.
 
-💫 If you like to learn more about federation, check out the [Cosmo Docs](https://cosmo-docs.wundergraph.com/).
+💫 If you would like to learn more about federation, check out the [WunderGraph Cosmo Documentation](https://cosmo-docs.wundergraph.com/)!
