@@ -1,7 +1,7 @@
 # cosmo-federation-demos
 
 This repository contains a demo of [WunderGraph Cosmo](https://cosmo-docs.wundergraph.com/) Federation capabilities. It showcases to implement subgraphs in TypeScript and Go and how to compose them into a federated graph.
-It uses the command-line [`wgc`](https://cosmo-docs.wundergraph.com/cli/intro) to compose a federated schema from multiple subgraphs and the [`Cosmo Router`](https://cosmo-docs.wundergraph.com/router) to run the Federated Graph. The router is the component that understands the GraphQL Federation protocol. It is responsible for routing requests to the correct service and for aggregating the responses.
+It uses the command-line [`wgc`](https://cosmo-docs.wundergraph.com/cli/intro) to compose a federated schema from multiple subgraphs and the [`Cosmo Router`](https://cosmo-docs.wundergraph.com/router) to run the Federated Graph.
 
 ## Getting started
 
