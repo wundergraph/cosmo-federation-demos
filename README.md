@@ -1,83 +1,41 @@
 # cosmo-federation-demos
-WunderGraph Cosmo Federation demonstrations in TypeScript or Go.
+
+This repository contains a demo of [WunderGraph Cosmo](https://cosmo-docs.wundergraph.com/) Federation capabilities. It showcases to implement subgraphs in TypeScript and Go and how to compose them into a federated graph.
+It uses the command-line [`wgc`](https://cosmo-docs.wundergraph.com/cli/intro) to compose a federated schema from multiple subgraphs and the [`Cosmo Router`](https://cosmo-docs.wundergraph.com/router) to run the Federated Graph.
+
+## Getting started
+
+We made it easy to get started with the demo. Just follow the steps below.
 
 ## Prerequisites
-1. Install `wgc` (0.34+)
+1. Install the dependencies `npm install`
 
- ```bash
-npm i -g wgc@latest
-```
-
-## Go
-### Additional Prerequisites
-1. Install Go 1.21 https://go.dev/doc/install
-2. Install Make (optional)
-- Windows: https://gnuwin32.sourceforge.net/packages/make.htm
-- MacOS: 
+### Running the demo with TypeScript Subgraphs
 
 ```bash
-brew install make
+npm start
 ```
 
-### Running the demo
-1. Using makefile
+Finally, go to [http://localhost:3002](http://localhost:3002) and try out the example query [`./example-queries.graphql`](./example-queries.graphql)!
 
-```makefile
-make run-go
-```
+### Using Go Subgraphs
 
-2. From source
-
-- Run the services
-```bash
-# run the services
-cd demos/go && go run cmd/all/main.go
-```
-- Download and run the router
-```bash
-# run the router
-wgc router download-binary
-cd router && ./router
-```
-
-Go to http://localhost:3002 and try out the example query `./example-queries.graphql`!
-
-### Generating the router configuration
-NOTE: If you have not changed the schemas, this step is not necessary.
+You can also run subgraphs in Go. To do so, you need to have the [Go toolchain installed](https://go.dev/doc/install).
 
 ```bash
-cd router/go
-wgc router compose -i graphs-go.yaml -o ../config.json
+npm start-go
 ```
 
-## TypeScript
-### Additional Prerequisites
-1. Node 18+ https://nodejs.org/en/download
-2. Install the packages
+### Generating the router configuration (optional)
+
+You can update the subgraph schemas and regenerate the router configuration by running:
 
 ```bash
-{package manager} install
+npm run compose
+# or
+npm run compose-go
 ```
 
-### Running the demo
-1. Using Make
+This will require a restart of the router so press `CTRL+C` and run `npm start` again.
 
-```makefile
-make run-ts
-```
-
-2. Using your chosen package manager
-
-```bash
-{package manager} start
-```
-
-Go to http://localhost:3002 and try out the example query `./example-queries.graphql`!
-
-### Generating the router configuration
-NOTE: If you have not changed the schemas, this step is not necessary.
-
-```bash
-cd router/ts
-wgc router compose -i graphs-ts.yaml -o ../config.json
-```
+💫 If you like to learn more about federation, check out the [Cosmo Docs](https://cosmo-docs.wundergraph.com/).

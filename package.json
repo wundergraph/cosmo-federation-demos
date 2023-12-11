@@ -1,18 +1,25 @@
 {
-  "description": "WunderGraph Cosmo Federation Demos in TypeScript or Go",
+  "description": "WunderGraph Cosmo Federation Demos",
   "scripts": {
-    "services": "concurrently --kill-others-on-fail \"ts-node demos/typescript/employees/server.ts\" \"ts-node demos/typescript/family/server.ts\" \"ts-node demos/typescript/hobbies/server.ts\" \"ts-node demos/typescript/products/server.ts\"",
+    "services": "run-script-os",
+    "services:default": "concurrently --kill-others-on-fail \"ts-node demos/typescript/employees/server.ts\" \"ts-node demos/typescript/family/server.ts\" \"ts-node demos/typescript/hobbies/server.ts\" \"ts-node demos/typescript/products/server.ts\"",
+    "services-go": "run-script-os",
+    "services-go:default": "cd demos/go && go run ./cmd/all/main.go",
     "start": "run-script-os",
     "start:default": "concurrently \"npm run services\" \"wgc router download-binary; cd ./router && ./router\"",
-    "start:win32": "concurrently \"npm run services\" \"wgc router download-binary && cd router && router.exe\""
+    "start:win32": "concurrently \"npm run services\" \"wgc router download-binary && cd router && router.exe\"",
+    "start-go": "run-script-os",
+    "start-go:default": "concurrently \"npm run services-go\" \"wgc router download-binary; cd ./router && ./router\"",
+    "start-go:win32": "concurrently \"npm run services-go\" \"wgc router download-binary && cd router && router.exe\"",
+    "compose": "cd router/ts && wgc router compose -i graphs-ts.yaml -o ../config.json",
+    "compose-go": "cd router/go && wgc router compose -i graphs-go.yaml -o ../config.json"
   },
   "devDependencies": {
     "@graphql-yoga/node": "^2.13.13",
     "@types/node": "^20.9.3",
     "run-script-os": "^1.1.6",
-    "typescript": "^5.3.2"
-  },
-  "dependencies": {
+    "typescript": "^5.3.2",
+    "wgc": "latest",
     "concurrently": "^8.2.2",
     "ts-node": "^10.9.1"
   }
