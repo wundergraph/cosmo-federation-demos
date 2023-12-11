@@ -18,7 +18,7 @@ npm start
 
 Finally, go to [http://localhost:3002](http://localhost:3002) and try out the example query [`./example-queries.graphql`](./example-queries.graphql)!
 
-## Run Go Subgraphs
+### Using Go Subgraphs
 
 You can also run subgraphs in Go. To do so, you need to have the [Go toolchain installed](https://go.dev/doc/install).
 
