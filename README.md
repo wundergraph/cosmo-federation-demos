@@ -29,6 +29,9 @@ You can update the subgraph schemas and regenerate the router configuration by r
 npm run compose
 ```
 
+> [!NOTE]
+> If you are running the Go version of the subgraphs, you need to run `npm run compose-go` instead.
+
 This will require a restart of the router so press `CTRL+C` and run `npm start` again.
 
 💫 If you like to learn more about federation, check out the [Cosmo Docs](https://cosmo-docs.wundergraph.com/).

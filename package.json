@@ -11,7 +11,8 @@
     "start-go": "run-script-os",
     "start-go:default": "concurrently \"npm run services-go\" \"wgc router download-binary; cd ./router && ./router\"",
     "start-go:win32": "concurrently \"npm run services-go\" \"wgc router download-binary && cd router && router.exe\"",
-    "compose": "cd router/ts && wgc router compose -i graphs-ts.yaml -o ../config.json"
+    "compose": "cd router/ts && wgc router compose -i graphs-ts.yaml -o ../config.json",
+    "compose-go": "cd router/go && wgc router compose -i graphs-go.yaml -o ../config.json"
   },
   "devDependencies": {
     "@graphql-yoga/node": "^2.13.13",
