@@ -4,7 +4,7 @@
     "services": "run-script-os",
     "services:default": "concurrently --kill-others-on-fail \"ts-node demos/typescript/employees/server.ts\" \"ts-node demos/typescript/family/server.ts\" \"ts-node demos/typescript/hobbies/server.ts\" \"ts-node demos/typescript/products/server.ts\"",
     "services-go": "run-script-os",
-    "services-go:default": "cd demos/go && go run ./cmd/all/main.go",
+    "services-go:default": "cd demos/go && go run cmd/all/main.go",
     "start": "run-script-os",
     "start:default": "concurrently \"npm run services\" \"wgc router download-binary; cd ./router && ./router\"",
     "start:win32": "concurrently \"npm run services\" \"wgc router download-binary && cd router && router.exe\"",
