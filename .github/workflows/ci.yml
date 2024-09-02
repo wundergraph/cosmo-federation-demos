@@ -1,0 +1,154 @@
+name: Cosmo Previews
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - closed
+      - synchronize
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' || github.event.action == 'reopened'
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.10.0
+          cache: npm
+
+      - name: Install wgc
+        run: npm i -g wgc@latest
+
+      # 1. Create & Publish feature subgraph based on cosmo.yaml
+      # 2. Create a new feature flag
+      - uses: wundergraph/cosmo-previews@v0.1.0
+        id: ff
+        with:
+          config_path: .github/cosmo.yaml
+          create: true # Create the feature flag + subgraphs from cosmo.yaml
+          cosmo_api_key: ${{ secrets.COSMO_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          echo "${{ steps.ff.outputs.feature_subgraphs_to_deploy }}"
+
+      - name: Setup Flyctl
+        run: curl -L https://fly.io/install.sh | sh
+
+      - name: Deploy apps to Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          pr_number=${{ github.event.number }}
+          cd demos/go
+          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_deploy }}; do
+            name = ${subgraph.featureSubgraphName}
+            dockerFilePath = ./Dockerfile.${subgraph.baseSubgraphName}
+            flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
+          done
+
+  update:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'synchronize'
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.10.0
+          cache: npm
+
+      - name: Install wgc
+        run: npm i -g wgc@latest
+
+      - uses: wundergraph/cosmo-previews@v0.1.0
+        id: ff
+        with:
+          config_path: .github/cosmo.yaml
+          update: true # Only update the feature subgraphs from cosmo.yaml
+          cosmo_api_key: ${{ secrets.COSMO_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          echo "${{ steps.ff.outputs.feature_subgraphs_to_deploy }}"
+          echo "${{ steps.ff.outputs.feature_subgraphs_to_destroy }}"
+
+      - name: Setup Flyctl
+        run: curl -L https://fly.io/install.sh | sh
+
+      - name: Deploy or update apps on Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          pr_number=${{ github.event.number }}
+          cd demos/go
+          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_deploy }}; do
+            name = ${subgraph.featureSubgraphName}
+            dockerFilePath = ./Dockerfile.${subgraph.baseSubgraphName}
+            if flyctl apps list | grep -q $name; then
+              flyctl deploy --app $name --yes
+            else
+              flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
+            fi
+          done
+
+          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_destroy }}; do
+            name = ${subgraph.featureSubgraphName}
+            flyctl apps destroy $name --yes
+          done
+
+  destroy:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed'
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.10.0
+          cache: npm
+
+      - name: Install wgc
+        run: npm i -g wgc@latest
+
+      - uses: wundergraph/cosmo-previews@v0.1.0
+        id: ff
+        with:
+          config_path: .github/cosmo.yaml
+          destroy: true # Only destroy the feature flag + subgraphs from cosmo.yaml
+          cosmo_api_key: ${{ secrets.COSMO_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          echo "Feature flag and the feature subgraphs have been destroyed. You can now unprovision the subgraph services."
+      - run: |
+          echo "${{ steps.ff.outputs.feature_subgraphs_to_destroy }}"
+
+      - name: Setup Flyctl
+        run: curl -L https://fly.io/install.sh | sh
+
+      - name: Destroy apps on Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_destroy }}; do
+            name = ${subgraph.featureSubgraphName}
+            flyctl apps destroy $name --yes
+          done
