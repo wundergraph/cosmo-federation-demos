@@ -41,8 +41,7 @@ jobs:
       - run: |
           echo "${{ steps.ff.outputs.feature_subgraphs_to_deploy }}"
 
-      - name: Setup Flyctl
-        run: curl -L https://fly.io/install.sh | sh
+      - uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy apps to Fly.io
         env:
@@ -86,8 +85,7 @@ jobs:
           echo "${{ steps.ff.outputs.feature_subgraphs_to_deploy }}"
           echo "${{ steps.ff.outputs.feature_subgraphs_to_destroy }}"
 
-      - name: Setup Flyctl
-        run: curl -L https://fly.io/install.sh | sh
+      - uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy or update apps on Fly.io
         env:
@@ -105,7 +103,7 @@ jobs:
             fi
           done
 
-          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_destroy }}' | jq -c '.[]' | while read -r subgraph; do
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             flyctl apps destroy $name --yes
           done
@@ -141,14 +139,13 @@ jobs:
       - run: |
           echo "${{ steps.ff.outputs.feature_subgraphs_to_destroy }}"
 
-      - name: Setup Flyctl
-        run: curl -L https://fly.io/install.sh | sh
+      - uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Destroy apps on Fly.io
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_destroy }}' | jq -c '.[]' | while read -r subgraph; do
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             flyctl apps destroy $name --yes
           done
