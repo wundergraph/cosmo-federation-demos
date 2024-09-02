@@ -48,11 +48,11 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          pr_number=${{ github.event.number }}
           cd demos/go
-          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_deploy }}; do
-            name = ${subgraph.featureSubgraphName}
-            dockerFilePath = ./Dockerfile.${subgraph.baseSubgraphName}
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+            name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
+            baseSubgraphName=$(echo "$subgraph" | jq -r '.baseSubgraphName')
+            dockerFilePath=./Dockerfile.$baseSubgraphName
             flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
           done
 
@@ -93,11 +93,11 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          pr_number=${{ github.event.number }}
           cd demos/go
-          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_deploy }}; do
-            name = ${subgraph.featureSubgraphName}
-            dockerFilePath = ./Dockerfile.${subgraph.baseSubgraphName}
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+            name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
+            baseSubgraphName=$(echo "$subgraph" | jq -r '.baseSubgraphName')
+            dockerFilePath=./Dockerfile.$baseSubgraphName
             if flyctl apps list | grep -q $name; then
               flyctl deploy --app $name --yes
             else
@@ -105,8 +105,8 @@ jobs:
             fi
           done
 
-          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_destroy }}; do
-            name = ${subgraph.featureSubgraphName}
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+            name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             flyctl apps destroy $name --yes
           done
 
@@ -148,7 +148,7 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_destroy }}; do
-            name = ${subgraph.featureSubgraphName}
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+            name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             flyctl apps destroy $name --yes
           done
