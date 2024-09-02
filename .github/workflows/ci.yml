@@ -50,8 +50,8 @@ jobs:
         run: |
           cd demos/go
           for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_deploy }}; do
-            name = ${subgraph.featureSubgraphName}
-            dockerFilePath = ./Dockerfile.${subgraph.baseSubgraphName}
+            name = $subgraph.featureSubgraphName
+            dockerFilePath = ./Dockerfile.$subgraph.baseSubgraphName
             flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
           done
 
@@ -94,8 +94,10 @@ jobs:
         run: |
           cd demos/go
           for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_deploy }}; do
-            name = ${subgraph.featureSubgraphName}
-            dockerFilePath = ./Dockerfile.${subgraph.baseSubgraphName}
+            echo $subgraph
+            echo $subgraph.featureSubgraphName
+            name = $subgraph.featureSubgraphName
+            dockerFilePath = ./Dockerfile.$subgraph.baseSubgraphName
             if flyctl apps list | grep -q $name; then
               flyctl deploy --app $name --yes
             else
@@ -147,6 +149,6 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           for subgraph in ${{ steps.ff.outputs.feature_subgraphs_to_destroy }}; do
-            name = ${subgraph.featureSubgraphName}
+            name = $subgraph.featureSubgraphName
             flyctl apps destroy $name --yes
           done
