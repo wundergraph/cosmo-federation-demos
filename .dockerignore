@@ -1,0 +1,29 @@
+# flyctl launch added from .gitignore
+node_modules
+router/router
+router/LICENSE
+**/pnpm-lock.yaml
+**/packge-lock.json
+**/yarn.lock
+**/.idea
+
+# flyctl launch added from demos/go/cmd/availability/.gitignore
+demos/go/cmd/availability/availability
+
+# flyctl launch added from demos/go/cmd/employees/.gitignore
+demos/go/cmd/employees/employees
+
+# flyctl launch added from demos/go/cmd/family/.gitignore
+demos/go/cmd/family/family
+
+# flyctl launch added from demos/go/cmd/hobbies/.gitignore
+demos/go/cmd/hobbies/hobbies
+
+# flyctl launch added from demos/go/cmd/mood/.gitignore
+demos/go/cmd/mood/mood
+
+# flyctl launch added from demos/go/cmd/products/.gitignore
+demos/go/cmd/products/products
+
+# flyctl launch added from demos/go/cmd/products_fg/.gitignore
+demos/go/cmd/products_fg/products_fg
