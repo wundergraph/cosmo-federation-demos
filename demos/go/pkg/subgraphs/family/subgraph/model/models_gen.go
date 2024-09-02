@@ -52,6 +52,7 @@ func (Cat) IsAnimal() {}
 
 type Details struct {
 	Forename      string         `json:"forename"`
+	Middlename    *string        `json:"middlename,omitempty"`
 	Surname       string         `json:"surname"`
 	HasChildren   bool           `json:"hasChildren"`
 	MaritalStatus *MaritalStatus `json:"maritalStatus,omitempty"`
@@ -74,8 +75,8 @@ func (this Dog) GetName() string   { return this.Name }
 func (Dog) IsAnimal() {}
 
 type Employee struct {
-	Details *Details `json:"details,omitempty"`
 	ID      int      `json:"id"`
+	Details *Details `json:"details,omitempty"`
 }
 
 func (Employee) IsEntity() {}
@@ -110,6 +111,9 @@ func (this Pony) GetGender() Gender { return this.Gender }
 func (this Pony) GetName() string   { return this.Name }
 
 func (Pony) IsAnimal() {}
+
+type Query struct {
+}
 
 type SearchInput struct {
 	HasPets     *bool              `json:"hasPets,omitempty"`
@@ -161,9 +165,9 @@ func (e CatType) MarshalGQL(w io.Writer) {
 type Class string
 
 const (
-	ClassFish    Class = "Fish"
-	ClassMammal  Class = "Mammal"
-	ClassReptile Class = "Reptile"
+	ClassFish    Class = "FISH"
+	ClassMammal  Class = "MAMMAL"
+	ClassReptile Class = "REPTILE"
 )
 
 var AllClass = []Class{

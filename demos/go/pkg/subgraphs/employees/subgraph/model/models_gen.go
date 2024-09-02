@@ -27,11 +27,19 @@ type RoleType interface {
 	IsRoleType()
 	GetDepartments() []Department
 	GetTitle() []string
+	GetEmployees() []*Employee
+}
+
+type City struct {
+	Type    string   `json:"type"`
+	Name    string   `json:"name"`
+	Country *Country `json:"country,omitempty"`
 }
 
 type Consultancy struct {
-	Upc  string    `json:"upc"`
-	Lead *Employee `json:"lead"`
+	Upc             string    `json:"upc"`
+	Lead            *Employee `json:"lead"`
+	IsLeadAvailable *bool     `json:"isLeadAvailable,omitempty"`
 }
 
 func (Consultancy) IsProducts() {}
@@ -61,17 +69,36 @@ func (this Cosmo) GetEngineers() []*Employee {
 
 func (Cosmo) IsEntity() {}
 
+type Country struct {
+	Key *CountryKey `json:"key"`
+}
+
+func (Country) IsEntity() {}
+
+type CountryKey struct {
+	Name string `json:"name"`
+}
+
 type Details struct {
-	Forename string  `json:"forename"`
-	Location Country `json:"location"`
-	Surname  string  `json:"surname"`
+	Forename      string   `json:"forename"`
+	Location      *Country `json:"location"`
+	Surname       string   `json:"surname"`
+	PastLocations []*City  `json:"pastLocations"`
 }
 
 type Employee struct {
-	Details *Details `json:"details"`
-	ID      int      `json:"id"`
-	Role    RoleType `json:"role"`
-	Notes   string   `json:"notes"`
+	Details               *Details      `json:"details"`
+	ID                    int           `json:"id"`
+	Tag                   string        `json:"tag"`
+	Role                  RoleType      `json:"role"`
+	Notes                 *string       `json:"notes,omitempty"`
+	UpdatedAt             string        `json:"updatedAt"`
+	StartDate             string        `json:"startDate"`
+	CurrentMood           Mood          `json:"currentMood"`
+	DerivedMood           Mood          `json:"derivedMood"`
+	IsAvailable           bool          `json:"isAvailable"`
+	RootFieldThrowsError  *string       `json:"rootFieldThrowsError,omitempty"`
+	RootFieldErrorWrapper *ErrorWrapper `json:"rootFieldErrorWrapper,omitempty"`
 }
 
 func (Employee) IsIdentifiable() {}
@@ -81,8 +108,9 @@ func (Employee) IsEntity() {}
 
 type Engineer struct {
 	Departments  []Department `json:"departments"`
-	EngineerType EngineerType `json:"engineerType"`
 	Title        []string     `json:"title"`
+	Employees    []*Employee  `json:"employees"`
+	EngineerType EngineerType `json:"engineerType"`
 }
 
 func (Engineer) IsRoleType() {}
@@ -106,10 +134,26 @@ func (this Engineer) GetTitle() []string {
 	}
 	return interfaceSlice
 }
+func (this Engineer) GetEmployees() []*Employee {
+	if this.Employees == nil {
+		return nil
+	}
+	interfaceSlice := make([]*Employee, 0, len(this.Employees))
+	for _, concrete := range this.Employees {
+		interfaceSlice = append(interfaceSlice, concrete)
+	}
+	return interfaceSlice
+}
+
+type ErrorWrapper struct {
+	OkField    *string `json:"okField,omitempty"`
+	ErrorField *string `json:"errorField,omitempty"`
+}
 
 type Marketer struct {
 	Departments []Department `json:"departments"`
 	Title       []string     `json:"title"`
+	Employees   []*Employee  `json:"employees"`
 }
 
 func (Marketer) IsRoleType() {}
@@ -133,11 +177,25 @@ func (this Marketer) GetTitle() []string {
 	}
 	return interfaceSlice
 }
+func (this Marketer) GetEmployees() []*Employee {
+	if this.Employees == nil {
+		return nil
+	}
+	interfaceSlice := make([]*Employee, 0, len(this.Employees))
+	for _, concrete := range this.Employees {
+		interfaceSlice = append(interfaceSlice, concrete)
+	}
+	return interfaceSlice
+}
+
+type Mutation struct {
+}
 
 type Operator struct {
 	Departments  []Department    `json:"departments"`
-	OperatorType []OperationType `json:"operatorType"`
 	Title        []string        `json:"title"`
+	Employees    []*Employee     `json:"employees"`
+	OperatorType []OperationType `json:"operatorType"`
 }
 
 func (Operator) IsRoleType() {}
@@ -161,11 +219,25 @@ func (this Operator) GetTitle() []string {
 	}
 	return interfaceSlice
 }
+func (this Operator) GetEmployees() []*Employee {
+	if this.Employees == nil {
+		return nil
+	}
+	interfaceSlice := make([]*Employee, 0, len(this.Employees))
+	for _, concrete := range this.Employees {
+		interfaceSlice = append(interfaceSlice, concrete)
+	}
+	return interfaceSlice
+}
+
+type Query struct {
+}
 
 type Sdk struct {
 	Upc       string      `json:"upc"`
 	Engineers []*Employee `json:"engineers"`
 	Owner     *Employee   `json:"owner"`
+	Unicode   string      `json:"unicode"`
 }
 
 func (Sdk) IsProducts() {}
@@ -185,62 +257,12 @@ func (this Sdk) GetEngineers() []*Employee {
 
 func (Sdk) IsEntity() {}
 
+type Subscription struct {
+}
+
 type Time struct {
 	UnixTime  int    `json:"unixTime"`
 	TimeStamp string `json:"timeStamp"`
-}
-
-type Country string
-
-const (
-	CountryAmerica     Country = "AMERICA"
-	CountryEngland     Country = "ENGLAND"
-	CountryGermany     Country = "GERMANY"
-	CountryIndia       Country = "INDIA"
-	CountryNetherlands Country = "NETHERLANDS"
-	CountryPortugal    Country = "PORTUGAL"
-	CountrySpain       Country = "SPAIN"
-	CountryUkraine     Country = "UKRAINE"
-)
-
-var AllCountry = []Country{
-	CountryAmerica,
-	CountryEngland,
-	CountryGermany,
-	CountryIndia,
-	CountryNetherlands,
-	CountryPortugal,
-	CountrySpain,
-	CountryUkraine,
-}
-
-func (e Country) IsValid() bool {
-	switch e {
-	case CountryAmerica, CountryEngland, CountryGermany, CountryIndia, CountryNetherlands, CountryPortugal, CountrySpain, CountryUkraine:
-		return true
-	}
-	return false
-}
-
-func (e Country) String() string {
-	return string(e)
-}
-
-func (e *Country) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = Country(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid Country", str)
-	}
-	return nil
-}
-
-func (e Country) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 type Department string
@@ -326,6 +348,47 @@ func (e *EngineerType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e EngineerType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type Mood string
+
+const (
+	MoodHappy Mood = "HAPPY"
+	MoodSad   Mood = "SAD"
+)
+
+var AllMood = []Mood{
+	MoodHappy,
+	MoodSad,
+}
+
+func (e Mood) IsValid() bool {
+	switch e {
+	case MoodHappy, MoodSad:
+		return true
+	}
+	return false
+}
+
+func (e Mood) String() string {
+	return string(e)
+}
+
+func (e *Mood) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = Mood(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid Mood", str)
+	}
+	return nil
+}
+
+func (e Mood) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

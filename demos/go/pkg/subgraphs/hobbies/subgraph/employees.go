@@ -5,6 +5,7 @@ import "github.com/wundergraph/cosmo-federation-demos/demos/go/pkg/subgraphs/hob
 var employees = []*model.Employee{
 	{
 		// Jens
+		ID: 1,
 		Hobbies: []model.Hobby{
 			model.Exercise{
 				Category: model.ExerciseTypeSport,
@@ -26,14 +27,24 @@ var employees = []*model.Employee{
 				},
 			},
 			model.Travelling{
-				CountriesLived: []model.Country{
-					model.CountryEngland, model.CountryGermany,
+				CountriesLived: []*model.Country{
+					{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Germany",
+						},
+					},
 				},
 			},
 		},
 	},
 	{
 		// Dustin
+		ID: 2,
 		Hobbies: []model.Hobby{
 			model.Exercise{
 				Category: model.ExerciseTypeStrengthTraining,
@@ -49,13 +60,13 @@ var employees = []*model.Employee{
 				Languages: []model.ProgrammingLanguage{
 					model.ProgrammingLanguageGo,
 					model.ProgrammingLanguageRust,
-					model.ProgrammingLanguageTypescript,
 				},
 			},
 		},
 	},
 	{
 		// Stefan
+		ID: 3,
 		Hobbies: []model.Hobby{
 			model.Exercise{
 				Category: model.ExerciseTypeHiking,
@@ -67,14 +78,24 @@ var employees = []*model.Employee{
 				Name: "Reading",
 			},
 			model.Travelling{
-				CountriesLived: []model.Country{
-					model.CountryAmerica, model.CountrySerbia,
+				CountriesLived: []*model.Country{
+					{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Serbia",
+						},
+					},
 				},
 			},
 		},
 	},
 	{
 		// Björn
+		ID: 4,
 		Hobbies: []model.Hobby{
 			model.Exercise{
 				Category: model.ExerciseTypeHiking,
@@ -87,14 +108,24 @@ var employees = []*model.Employee{
 				YearsOfExperience: 20.0,
 			},
 			model.Travelling{
-				CountriesLived: []model.Country{
-					model.CountryAmerica, model.CountryGermany,
+				CountriesLived: []*model.Country{
+					{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Germany",
+						},
+					},
 				},
 			},
 		},
 	},
 	{
 		// Sergiy
+		ID: 5,
 		Hobbies: []model.Hobby{
 			model.Other{
 				Name: "Building a house",
@@ -109,6 +140,7 @@ var employees = []*model.Employee{
 	},
 	{
 		// Suvij
+		ID: 7,
 		Hobbies: []model.Hobby{
 			model.Gaming{
 				Genres: []model.GameGenre{
@@ -124,6 +156,7 @@ var employees = []*model.Employee{
 	},
 	{
 		// Nithin
+		ID: 8,
 		Hobbies: []model.Hobby{
 			model.Exercise{
 				Category: model.ExerciseTypeStrengthTraining,
@@ -141,27 +174,8 @@ var employees = []*model.Employee{
 		},
 	},
 	{
-		// Alberto
-		Hobbies: []model.Hobby{
-			model.Exercise{
-				Category: model.ExerciseTypeCalisthenics,
-			},
-			model.Gaming{
-				Genres: []model.GameGenre{
-					model.GameGenreBoard,
-				},
-				Name:              "Chess",
-				YearsOfExperience: 2.0,
-			},
-			model.Programming{
-				Languages: []model.ProgrammingLanguage{
-					model.ProgrammingLanguageRust,
-				},
-			},
-		},
-	},
-	{
 		// Eelco
+		ID: 10,
 		Hobbies: []model.Hobby{
 			model.Programming{
 				Languages: []model.ProgrammingLanguage{
@@ -181,15 +195,45 @@ var employees = []*model.Employee{
 				Name: "saas-ui",
 			},
 			model.Travelling{
-				CountriesLived: []model.Country{
-					model.CountryGermany, model.CountryIndonesia, model.CountryNetherlands,
-					model.CountryPortugal, model.CountrySpain, model.CountryThailand,
+				CountriesLived: []*model.Country{
+					{
+						Key: &model.CountryKey{
+							Name: "Germany",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Indonesia",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Netherlands",
+						},
+					},
+
+					{
+						Key: &model.CountryKey{
+							Name: "Portugal",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Spain",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Thailand",
+						},
+					},
 				},
 			},
 		},
 	},
 	{
 		// Alexandra
+		ID: 11,
 		Hobbies: []model.Hobby{
 			model.Other{
 				Name: "Spending time with the family",
@@ -198,6 +242,7 @@ var employees = []*model.Employee{
 	},
 	{
 		// David
+		ID: 12,
 		Hobbies: []model.Hobby{
 			model.Programming{
 				Languages: model.AllProgrammingLanguage,
@@ -214,8 +259,22 @@ var employees = []*model.Employee{
 				YearsOfExperience: 25.5,
 			},
 			model.Travelling{
-				CountriesLived: []model.Country{
-					model.CountryEngland, model.CountryKorea, model.CountryTaiwan,
+				CountriesLived: []*model.Country{
+					{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Korea",
+						},
+					},
+					{
+						Key: &model.CountryKey{
+							Name: "Taiwan",
+						},
+					},
 				},
 			},
 		},
