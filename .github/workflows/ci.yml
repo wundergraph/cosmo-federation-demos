@@ -53,7 +53,7 @@ jobs:
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             baseSubgraphName=$(echo "$subgraph" | jq -r '.baseSubgraphName')
             dockerFilePath=./Dockerfile.$baseSubgraphName
-            flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
+            fly launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
           done
 
   update:
@@ -98,16 +98,16 @@ jobs:
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             baseSubgraphName=$(echo "$subgraph" | jq -r '.baseSubgraphName')
             dockerFilePath=./Dockerfile.$baseSubgraphName
-            if flyctl apps list | grep -q $name; then
-              flyctl deploy --app $name --yes
+            if fly apps list | grep -q $name; then
+              fly deploy --app $name --yes
             else
-              flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
+              fly launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
             fi
           done
 
           echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
-            flyctl apps destroy $name --yes
+            fly apps destroy $name --yes
           done
 
   destroy:
@@ -150,5 +150,5 @@ jobs:
         run: |
           echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
-            flyctl apps destroy $name --yes
+            fly apps destroy $name --yes
           done
