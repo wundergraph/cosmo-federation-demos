@@ -1,16 +1,45 @@
 package subgraph
 
 import (
-	"github.com/wundergraph/cosmo-federation-demos/demos/go/pkg/subgraphs/employees/subgraph/model"
 	"slices"
+
+	"github.com/wundergraph/cosmo-federation-demos/demos/go/pkg/subgraphs/employees/subgraph/model"
 )
+
+func strPtr(s string) *string {
+	return &s
+}
 
 var employees = []*model.Employee{
 	{
 		Details: &model.Details{
 			Forename: "Jens",
-			Location: model.CountryGermany,
-			Surname:  "Neuse",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "Germany",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Neuse",
 		},
 		ID: 1,
 		Role: model.Engineer{
@@ -18,13 +47,39 @@ var employees = []*model.Employee{
 			EngineerType: model.EngineerTypeBackend,
 			Title:        []string{"Founder", "CEO"},
 		},
-		Notes: "Jens notes resolved by employees",
+		Notes:     strPtr("Jens notes resolved by employees"),
+		StartDate: "January 2020",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "Dustin",
-			Location: model.CountryGermany,
-			Surname:  "Deus",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "Germany",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Deus",
 		},
 		ID: 2,
 		Role: model.Engineer{
@@ -32,26 +87,78 @@ var employees = []*model.Employee{
 			EngineerType: model.EngineerTypeFullstack,
 			Title:        []string{"Co-founder", "Tech Lead"},
 		},
-		Notes: "Dustin notes resolved by employees",
+		Notes:     strPtr("Dustin notes resolved by employees"),
+		StartDate: "July 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "Stefan",
-			Location: model.CountryAmerica,
-			Surname:  "Avram",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "America",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Avram",
 		},
 		ID: 3,
 		Role: model.Marketer{
 			Departments: []model.Department{model.DepartmentMarketing},
 			Title:       []string{"Co-founder", "Head of Growth"},
 		},
-		Notes: "Stefan notes resolved by employees",
+		Notes:     strPtr("Stefan notes resolved by employees"),
+		StartDate: "June 2021",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "Björn",
-			Location: model.CountryGermany,
-			Surname:  "Schwenzer",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "Germany",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Schwenzer",
 		},
 		ID: 4,
 		Role: model.Operator{
@@ -61,27 +168,79 @@ var employees = []*model.Employee{
 			},
 			Title: []string{"Co-founder", "COO"},
 		},
-		Notes: "Björn notes resolved by employees",
+		Notes:     strPtr("Björn notes resolved by employees"),
+		StartDate: "July 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		ID: 5,
 		Details: &model.Details{
 			Forename: "Sergiy",
-			Location: model.CountryUkraine,
-			Surname:  "Petrunin",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "Ukraine",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Petrunin",
 		},
 		Role: model.Engineer{
 			Departments:  []model.Department{model.DepartmentEngineering},
 			EngineerType: model.EngineerTypeBackend,
 			Title:        []string{"Senior GO Engineer"},
 		},
-		Notes: "Serigy notes resolved by employees",
+		Notes:     strPtr("Serigy notes resolved by employees"),
+		StartDate: "July 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "Suvij",
-			Location: model.CountryIndia,
-			Surname:  "Surya",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "India",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Surya",
 		},
 		ID: 7,
 		Role: model.Engineer{
@@ -89,13 +248,39 @@ var employees = []*model.Employee{
 			EngineerType: model.EngineerTypeFullstack,
 			Title:        []string{"Software Engineer"},
 		},
-		Notes: "Suvij notes resolved by employees",
+		Notes:     strPtr("Suvij notes resolved by employees"),
+		StartDate: "September 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "Nithin",
-			Location: model.CountryIndia,
-			Surname:  "Kumar",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "India",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Kumar",
 		},
 		ID: 8,
 		Role: model.Engineer{
@@ -103,27 +288,39 @@ var employees = []*model.Employee{
 			EngineerType: model.EngineerTypeFullstack,
 			Title:        []string{"Software Engineer"},
 		},
-		Notes: "Nithin notes resolved by employees",
-	},
-	{
-		Details: &model.Details{
-			Forename: "Alberto",
-			Location: model.CountryPortugal,
-			Surname:  "Garcia Hierro",
-		},
-		ID: 9,
-		Role: model.Engineer{
-			Departments:  []model.Department{model.DepartmentEngineering},
-			EngineerType: model.EngineerTypeBackend,
-			Title:        []string{"Senior Backend Engineer"},
-		},
-		Notes: "Alberto notes resolved by employees",
+		Notes:     strPtr("Nithin notes resolved by employees"),
+		StartDate: "September 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "Eelco",
-			Location: model.CountryNetherlands,
-			Surname:  "Wiersma",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "Netherlands",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Wiersma",
 		},
 		ID: 10,
 		Role: model.Engineer{
@@ -131,13 +328,39 @@ var employees = []*model.Employee{
 			EngineerType: model.EngineerTypeFrontend,
 			Title:        []string{"Senior Frontend Engineer"},
 		},
-		Notes: "Eelco notes resolved by employees",
+		Notes:     strPtr("Eelco notes resolved by employees"),
+		StartDate: "November 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "Alexandra",
-			Location: model.CountryGermany,
-			Surname:  "Neuse",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "Germany",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Neuse",
 		},
 		ID: 11,
 		Role: model.Operator{
@@ -147,13 +370,39 @@ var employees = []*model.Employee{
 			},
 			Title: []string{"Accounting & Finance"},
 		},
-		Notes: "Alexandra notes resolved by employees",
+		Notes:     strPtr("Alexandra notes resolved by employees"),
+		StartDate: "November 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 	{
 		Details: &model.Details{
 			Forename: "David",
-			Location: model.CountryEngland,
-			Surname:  "Stutt",
+			Location: &model.Country{
+				Key: &model.CountryKey{
+					Name: "England",
+				},
+			},
+			PastLocations: []*model.City{
+				&model.City{
+					Type: "city",
+					Name: "Ohio",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "America",
+						},
+					},
+				},
+				&model.City{
+					Type: "city",
+					Name: "London",
+					Country: &model.Country{
+						Key: &model.CountryKey{
+							Name: "England",
+						},
+					},
+				},
+			},
+			Surname: "Stutt",
 		},
 		ID: 12,
 		Role: model.Engineer{
@@ -161,7 +410,9 @@ var employees = []*model.Employee{
 			EngineerType: model.EngineerTypeFullstack,
 			Title:        []string{"Software Engineer"},
 		},
-		Notes: "David notes resolved by employees",
+		Notes:     strPtr("David notes resolved by employees"),
+		StartDate: "December 2022",
+		UpdatedAt: "2021-09-01T00:00:00Z",
 	},
 }
 

@@ -1,0 +1,98 @@
+extend schema
+@link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@authenticated", "@composeDirective", "@external", "@extends", "@inaccessible", "@interfaceObject", "@override", "@provides", "@key", "@requires", "@requiresScopes", "@shareable", "@tag"])
+
+directive @goField(
+  forceResolver: Boolean
+  name: String
+  omittable: Boolean
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+enum ExerciseType {
+  CALISTHENICS
+  HIKING
+  SPORT
+  STRENGTH_TRAINING
+}
+
+type Exercise implements Hobby {
+  employees: [Employee!]! @goField(forceResolver: true)
+  category: ExerciseType!
+}
+
+interface Experience {
+  yearsOfExperience: Float!
+}
+
+type Flying implements Experience & Hobby {
+  employees: [Employee!]! @goField(forceResolver: true)
+  planeModels: [String!]!
+  yearsOfExperience: Float!
+}
+
+enum GameGenre {
+  ADVENTURE
+  BOARD
+  FPS
+  CARD
+  RPG
+  ROGUELITE
+  SIMULATION
+  STRATEGY
+}
+
+type Gaming implements Experience & Hobby {
+  employees: [Employee!]! @goField(forceResolver: true)
+  genres: [GameGenre!]!
+  name: String!
+  yearsOfExperience: Float!
+}
+
+type Other implements Hobby {
+  employees: [Employee!]! @goField(forceResolver: true)
+  name: String!
+}
+
+enum ProgrammingLanguage {
+  CSHARP
+  GO
+  RUST
+  TYPESCRIPT
+}
+
+type Programming implements Hobby {
+  employees: [Employee!]! @goField(forceResolver: true)
+  languages: [ProgrammingLanguage!]!
+}
+
+# Using a nested key field simply because it can showcase potential bug
+# vectors / Federation capabilities.
+type Country @key(fields: "key { name }", resolvable: false) {
+  key: CountryKey!
+}
+
+type CountryKey {
+  name: String!
+}
+
+type Travelling implements Hobby {
+  employees: [Employee!]! @goField(forceResolver: true)
+  countriesLived: [Country!]!
+}
+
+interface Hobby {
+  employees: [Employee!]! @goField(forceResolver: true)
+}
+
+type Employee @key(fields: "id") {
+  id: Int!
+  hobbies: [Hobby!]
+}
+
+type SDK @key(fields: "upc") {
+  upc: ID!
+  clientLanguages: [ProgrammingLanguage!]!
+}
+
+type Subscription {
+  countHob(max: Int! intervalMilliseconds: Int!): Int!
+}
