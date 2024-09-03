@@ -96,11 +96,9 @@ jobs:
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             baseSubgraphName=$(echo "$subgraph" | jq -r '.baseSubgraphName')
             dockerFilePath=./Dockerfile.$baseSubgraphName
-            if flyctl apps list | grep -q $name; then
-              flyctl deploy --app $name --yes
-            else
-              flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
-            fi
+            echo $name
+            echo $baseSubgraphName
+            echo $dockerFilePath
           done
 
           echo '${{ steps.ff.outputs.feature_subgraphs_to_destroy }}' | jq -c '.[]' | while read -r subgraph; do
