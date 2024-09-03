@@ -103,7 +103,7 @@ jobs:
             fi
           done
 
-          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_destroy }}' | jq -c '.[]' | while read -r subgraph; do
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             flyctl apps destroy $name --yes
           done
@@ -145,7 +145,7 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          echo '${{ steps.ff.outputs.feature_subgraphs_to_deploy }}' | jq -c '.[]' | while read -r subgraph; do
+          echo '${{ steps.ff.outputs.feature_subgraphs_to_destroy }}' | jq -c '.[]' | while read -r subgraph; do
             name=$(echo "$subgraph" | jq -r '.featureSubgraphName')
             flyctl apps destroy $name --yes
           done
