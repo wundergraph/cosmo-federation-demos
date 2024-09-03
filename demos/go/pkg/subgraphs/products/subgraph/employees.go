@@ -16,6 +16,7 @@ var employees = []*model.Employee{
 			model.ProductNameMarketing,
 			model.ProductNameSdk,
 		},
+		ProductCount: 5,
 		Notes: strPtr("Jens notes resolved by products"),
 	},
 	{
@@ -24,6 +25,7 @@ var employees = []*model.Employee{
 			model.ProductNameCosmo,
 			model.ProductNameSdk,
 		},
+		ProductCount: 2,
 		Notes: strPtr("Dustin notes resolved by products"),
 	},
 	{
@@ -32,6 +34,7 @@ var employees = []*model.Employee{
 			model.ProductNameConsultancy,
 			model.ProductNameMarketing,
 		},
+		ProductCount: 2,
 		Notes: strPtr("Stefan notes resolved by products"),
 	},
 	{
@@ -41,6 +44,7 @@ var employees = []*model.Employee{
 			model.ProductNameHumanResources,
 			model.ProductNameMarketing,
 		},
+		ProductCount: 3,
 		Notes: strPtr("Björn notes resolved by products"),
 	},
 	{
@@ -49,6 +53,7 @@ var employees = []*model.Employee{
 			model.ProductNameEngine,
 			model.ProductNameSdk,
 		},
+		ProductCount: 2,
 		Notes: strPtr("Sergiy notes resolved by products"),
 	},
 	{
@@ -57,6 +62,7 @@ var employees = []*model.Employee{
 			model.ProductNameCosmo,
 			model.ProductNameSdk,
 		},
+		ProductCount: 2,
 		Notes: strPtr("Suvij notes resolved by products"),
 	},
 	{
@@ -65,6 +71,7 @@ var employees = []*model.Employee{
 			model.ProductNameCosmo,
 			model.ProductNameSdk,
 		},
+		ProductCount: 2,
 		Notes: strPtr("Nithin notes resolved by products"),
 	},
 	{
@@ -74,6 +81,7 @@ var employees = []*model.Employee{
 			model.ProductNameCosmo,
 			model.ProductNameSdk,
 		},
+		ProductCount: 3,
 		Notes: strPtr("Eelco notes resolved by products"),
 	},
 	{
@@ -81,6 +89,7 @@ var employees = []*model.Employee{
 		Products: []model.ProductName{
 			model.ProductNameFinance,
 		},
+		ProductCount: 1,
 		Notes: strPtr("Alexandra notes resolved by products"),
 	},
 	{
@@ -91,6 +100,7 @@ var employees = []*model.Employee{
 			model.ProductNameEngine,
 			model.ProductNameSdk,
 		},
+		ProductCount: 4,
 		Notes: strPtr("David notes resolved by products"),
 	},
 }
