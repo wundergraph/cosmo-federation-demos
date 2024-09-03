@@ -133,13 +133,15 @@ type Employee implements Identifiable @key(fields: "id") {
   role: RoleType!
   notes: String @shareable
   updatedAt: String!
-  startDate: String! @requiresScopes(scopes: [["read:employee", "read:private"], ["read:all"]])
+  startDate: String!
+    @requiresScopes(scopes: [["read:employee", "read:private"], ["read:all"]])
   currentMood: Mood! @external
   derivedMood: Mood! @requires(fields: "currentMood")
   # From the `availability` service. Only defined for use in @requires
   isAvailable: Boolean! @external
   rootFieldThrowsError: String @goField(forceResolver: true)
   rootFieldErrorWrapper: ErrorWrapper @goField(forceResolver: true)
+  a: String!
 }
 
 type ErrorWrapper {

@@ -89,6 +89,7 @@ type ComplexityRoot struct {
 	}
 
 	Employee struct {
+		A                     func(childComplexity int) int
 		CurrentMood           func(childComplexity int) int
 		DerivedMood           func(childComplexity int) int
 		Details               func(childComplexity int) int
@@ -339,6 +340,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Details.Surname(childComplexity), true
+
+	case "Employee.a":
+		if e.complexity.Employee.A == nil {
+			break
+		}
+
+		return e.complexity.Employee.A(childComplexity), true
 
 	case "Employee.currentMood":
 		if e.complexity.Employee.CurrentMood == nil {
@@ -1011,13 +1019,15 @@ type Employee implements Identifiable @key(fields: "id") {
   role: RoleType!
   notes: String @shareable
   updatedAt: String!
-  startDate: String! @requiresScopes(scopes: [["read:employee", "read:private"], ["read:all"]])
+  startDate: String!
+    @requiresScopes(scopes: [["read:employee", "read:private"], ["read:all"]])
   currentMood: Mood! @external
   derivedMood: Mood! @requires(fields: "currentMood")
   # From the ` + "`" + `availability` + "`" + ` service. Only defined for use in @requires
   isAvailable: Boolean! @external
   rootFieldThrowsError: String @goField(forceResolver: true)
   rootFieldErrorWrapper: ErrorWrapper @goField(forceResolver: true)
+  a: String!
 }
 
 type ErrorWrapper {
@@ -1651,6 +1661,8 @@ func (ec *executionContext) fieldContext_Consultancy_lead(ctx context.Context, f
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -1806,6 +1818,8 @@ func (ec *executionContext) fieldContext_Cosmo_engineers(ctx context.Context, fi
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -1876,6 +1890,8 @@ func (ec *executionContext) fieldContext_Cosmo_lead(ctx context.Context, field g
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -2698,6 +2714,50 @@ func (ec *executionContext) fieldContext_Employee_rootFieldErrorWrapper(ctx cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Employee_a(ctx context.Context, field graphql.CollectedField, obj *model.Employee) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Employee_a(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.A, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Employee_a(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Employee",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Engineer_departments(ctx context.Context, field graphql.CollectedField, obj *model.Engineer) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Engineer_departments(ctx, field)
 	if err != nil {
@@ -2849,6 +2909,8 @@ func (ec *executionContext) fieldContext_Engineer_employees(ctx context.Context,
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -3089,6 +3151,8 @@ func (ec *executionContext) fieldContext_Entity_findEmployeeByID(ctx context.Con
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -3405,6 +3469,8 @@ func (ec *executionContext) fieldContext_Marketer_employees(ctx context.Context,
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -3472,6 +3538,8 @@ func (ec *executionContext) fieldContext_Mutation_updateEmployeeTag(ctx context.
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -3751,6 +3819,8 @@ func (ec *executionContext) fieldContext_Operator_employees(ctx context.Context,
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -3862,6 +3932,8 @@ func (ec *executionContext) fieldContext_Query_employee(ctx context.Context, fie
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -3940,6 +4012,8 @@ func (ec *executionContext) fieldContext_Query_employeeAsList(ctx context.Contex
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -4018,6 +4092,8 @@ func (ec *executionContext) fieldContext_Query_employees(ctx context.Context, fi
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -4132,6 +4208,8 @@ func (ec *executionContext) fieldContext_Query_teammates(ctx context.Context, fi
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -4213,6 +4291,8 @@ func (ec *executionContext) fieldContext_Query_firstEmployee(ctx context.Context
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -4559,6 +4639,8 @@ func (ec *executionContext) fieldContext_SDK_engineers(ctx context.Context, fiel
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -4629,6 +4711,8 @@ func (ec *executionContext) fieldContext_SDK_owner(ctx context.Context, field gr
 				return ec.fieldContext_Employee_rootFieldThrowsError(ctx, field)
 			case "rootFieldErrorWrapper":
 				return ec.fieldContext_Employee_rootFieldErrorWrapper(ctx, field)
+			case "a":
+				return ec.fieldContext_Employee_a(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 		},
@@ -7332,6 +7416,11 @@ func (ec *executionContext) _Employee(ctx context.Context, sel ast.SelectionSet,
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "a":
+			out.Values[i] = ec._Employee_a(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

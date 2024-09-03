@@ -37,6 +37,7 @@ func (r *entityResolver) FindEmployeeByID(ctx context.Context, id int) (*model.E
 				Notes:     employee.Notes,
 				StartDate: employee.StartDate,
 				UpdatedAt: time.Now().String(),
+				A:         employee.A,
 			}
 			return emp, nil
 		}

@@ -99,6 +99,7 @@ type Employee struct {
 	IsAvailable           bool          `json:"isAvailable"`
 	RootFieldThrowsError  *string       `json:"rootFieldThrowsError,omitempty"`
 	RootFieldErrorWrapper *ErrorWrapper `json:"rootFieldErrorWrapper,omitempty"`
+	A                     string        `json:"a"`
 }
 
 func (Employee) IsIdentifiable() {}
