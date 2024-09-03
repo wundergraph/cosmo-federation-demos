@@ -100,6 +100,7 @@ jobs:
             echo $baseSubgraphName
             echo $dockerFilePath
             if flyctl apps list | grep -q $name; then
+              echo "Updating $name"
               flyctl deploy --app $name --dockerfile $dockerFilePath --yes
             else
               flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
