@@ -58,6 +58,7 @@ type Details struct {
 	MaritalStatus *MaritalStatus `json:"maritalStatus,omitempty"`
 	Nationality   Nationality    `json:"nationality"`
 	Pets          []Pet          `json:"pets,omitempty"`
+	A             string         `json:"a"`
 }
 
 type Dog struct {
