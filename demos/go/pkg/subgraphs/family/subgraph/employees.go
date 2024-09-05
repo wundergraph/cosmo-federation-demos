@@ -19,6 +19,7 @@ var employees = []*model.Employee{
 			HasChildren:   true,
 			MaritalStatus: &married,
 			Nationality:   model.NationalityGerman,
+			A:             "A",
 		},
 	},
 	{
@@ -30,6 +31,7 @@ var employees = []*model.Employee{
 			HasChildren:   false,
 			MaritalStatus: &engaged,
 			Nationality:   model.NationalityGerman,
+			A:             "A",
 		},
 	},
 	{
@@ -49,6 +51,7 @@ var employees = []*model.Employee{
 					Dangerous: "yes",
 				},
 			},
+			A: "A",
 		},
 	},
 	{
@@ -73,6 +76,7 @@ var employees = []*model.Employee{
 					Name:   "Survivor",
 				},
 			},
+			A: "A",
 		},
 	},
 	{
@@ -146,6 +150,7 @@ var employees = []*model.Employee{
 					Type:   model.CatTypeHome,
 				},
 			},
+			A: "A",
 		},
 	},
 	{
@@ -156,6 +161,7 @@ var employees = []*model.Employee{
 			Middlename:  String(""),
 			HasChildren: false,
 			Nationality: model.NationalityIndian,
+			A:             "A",
 		},
 	},
 	{
@@ -166,6 +172,7 @@ var employees = []*model.Employee{
 			Middlename:  String(""),
 			HasChildren: false,
 			Nationality: model.NationalityIndian,
+			A:             "A",
 		},
 	},
 	{
@@ -183,6 +190,7 @@ var employees = []*model.Employee{
 					Name:   "Vanson",
 				},
 			},
+			A:             "A",
 		},
 	},
 	{
@@ -194,6 +202,7 @@ var employees = []*model.Employee{
 			HasChildren:   true,
 			MaritalStatus: &married,
 			Nationality:   model.NationalityGerman,
+			A:             "A",
 		},
 	},
 	{
@@ -212,6 +221,7 @@ var employees = []*model.Employee{
 					Type:   model.CatTypeHome,
 				},
 			},
+			A:             "A",
 		},
 	},
 }
