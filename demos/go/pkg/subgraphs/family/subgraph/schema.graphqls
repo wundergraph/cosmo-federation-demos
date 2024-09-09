@@ -96,6 +96,7 @@ type Details {
   maritalStatus: MaritalStatus
   nationality: Nationality!
   pets: [Pet]
+  a: String!
 }
 
 type Employee @key(fields: "id") {
