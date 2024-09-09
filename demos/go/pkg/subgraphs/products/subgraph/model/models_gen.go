@@ -55,9 +55,10 @@ type Documentation struct {
 func (Documentation) IsProducts() {}
 
 type Employee struct {
-	ID       int           `json:"id"`
-	Products []ProductName `json:"products"`
-	Notes    *string       `json:"notes,omitempty"`
+	ID           int           `json:"id"`
+	Products     []ProductName `json:"products"`
+	Notes        *string       `json:"notes,omitempty"`
+	ProductCount int           `json:"productCount"`
 }
 
 func (Employee) IsEntity() {}
