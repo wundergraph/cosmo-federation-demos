@@ -30,7 +30,7 @@ jobs:
 
       # 1. Create & Publish feature subgraph based on cosmo.yaml
       # 2. Create a new feature flag
-      - uses: wundergraph/cosmo-previews@v0.1.0
+      - uses: wundergraph/cosmo-previews@v0.1.1
         id: ff
         with:
           config_path: .github/cosmo.yaml
@@ -53,6 +53,7 @@ jobs:
             baseSubgraphName=$(echo "$subgraph" | jq -r '.baseSubgraphName')
             dockerFilePath=./Dockerfile.$baseSubgraphName
             flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
+            rm fly.toml
           done
 
   update:
@@ -73,7 +74,7 @@ jobs:
       - name: Install wgc
         run: npm i -g wgc@latest
 
-      - uses: wundergraph/cosmo-previews@v0.1.0
+      - uses: wundergraph/cosmo-previews@v0.1.1
         id: ff
         with:
           config_path: .github/cosmo.yaml
@@ -97,9 +98,10 @@ jobs:
             baseSubgraphName=$(echo "$subgraph" | jq -r '.baseSubgraphName')
             dockerFilePath=./Dockerfile.$baseSubgraphName
             if flyctl apps list | grep -q $name; then
-              flyctl deploy --app $name --yes
+              flyctl deploy --app $name --dockerfile $dockerFilePath --yes
             else
               flyctl launch --name $name --region lax --dockerfile $dockerFilePath --org wundergraph-demos --yes
+              rm fly.toml
             fi
           done
 
@@ -126,7 +128,7 @@ jobs:
       - name: Install wgc
         run: npm i -g wgc@latest
 
-      - uses: wundergraph/cosmo-previews@v0.1.0
+      - uses: wundergraph/cosmo-previews@v0.1.1
         id: ff
         with:
           config_path: .github/cosmo.yaml
